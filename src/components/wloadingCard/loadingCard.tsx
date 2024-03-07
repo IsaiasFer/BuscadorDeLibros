@@ -1,5 +1,5 @@
-import '../../assets/styles/loading.css'
 import LoadingCardItem from './loadingCardItem'
+import './loading.css'
 
 function LoadingCard() {
     return (

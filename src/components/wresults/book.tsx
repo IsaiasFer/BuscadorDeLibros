@@ -1,7 +1,7 @@
 import AddButton from '../wbutton/addButton'
-import '../wbutton/buttons.css'
 import DeleteButton from '../wbutton/deleteButton'
 import { cambiarEstado } from '../../funciones'
+import '../wbutton/buttons.css'
 
 function Book({ name, author, url, year ,added}: { name: string, author: string, url: string, year: string ,added:boolean}) {
     return (

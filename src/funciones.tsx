@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { Libro } from "./interfaces";
+import { libroCargando } from "./objetos";
 const instance=axios.create({
   baseURL:'https://4dd6-2803-9800-9404-bad0-6ff0-a6fb-381f-fe7e.ngrok-free.app',
   timeout:5000,
@@ -13,6 +15,36 @@ export function reemplazarEspaciosPorMas(cadena: string): string {
 
 export function cambiarEstado():void{
   console.log("La funcion de cambiar estado está funcionando")
+}
+
+export function cargarLibros(librosObtenidos:AxiosResponse):Libro[]{
+  const datos :Libro[]= [];
+  for (const element of librosObtenidos.data.docs) {
+    const imageUrl:string = `https://covers.openlibrary.org/b/olid/${element.cover_edition_key}-M.jpg`;
+    const libro:Libro = {
+      name: element.title,
+      author: element.author_name,
+      year: element.first_publish_year,
+      url: imageUrl,
+      added: false
+    };
+    datos.push(libro);
+  }
+  return datos
+}
+
+export async function obtenerDatos(nombredelibro: string,evento:React.FormEvent,setearLibro:(value: React.SetStateAction<Libro[]>) => void) {
+  evento.preventDefault()
+  const nombreDeLibroFinal = reemplazarEspaciosPorMas(nombredelibro);
+  const linkFinal = `https://openlibrary.org/search.json?q=${nombreDeLibroFinal}&fields=title,author_name,first_publish_year,cover_edition_key&limit=3`;
+  // Ponemos los libros a cargar
+  setearLibro([libroCargando])
+  try {
+    const response:AxiosResponse = await axios.get(linkFinal);
+    setearLibro(cargarLibros(response));
+  } catch (error) {
+    console.log("Hubo un error: " + error);
+  }
 }
 
 export async function getEmaBooks(){

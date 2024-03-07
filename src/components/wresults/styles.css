@@ -1,0 +1,45 @@
+
+.moviesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movieContainer {
+  display: flex;
+  background-color: aquamarine;
+  justify-content: space-between;
+  margin: 1em 0;
+  padding: 1em 3em;
+  border-radius: 10px;
+}
+.movieContainer figure {
+  background-color: #646cff;
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+}
+
+.movieContainer figure img {
+  max-height: 100%;
+}
+
+.movieContainer .title {
+  margin-top: 1.5em;
+  text-align: left;
+}
+.movieContainer .title span {
+  font-weight: bold;
+  font-size: 2.5em;
+}
+.movieContainer .autor {
+  display: flex;
+}
+.movieContainer .year {
+  display: flex;
+}
+
+.libro {
+  width: 70vw;
+}
+
