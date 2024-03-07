@@ -1,14 +1,15 @@
-import React from "react";
+import { Libro } from "../../interfaces";
 
 interface childProps {
-    onButtonClick: () => void;
+    onButtonClick: (libro:Libro) => void;
+    libro:Libro;
   }
 
 
-const DeleteButton:React.FC<childProps>=({onButtonClick}) =>{
+const DeleteButton:React.FC<childProps>=({onButtonClick,libro}) =>{
     return (
         <>
-            <div className="button deleteButton" onClick={onButtonClick}>
+            <div className="button deleteButton" onClick={()=>onButtonClick(libro)}>
                 Eliminar
             </div>
         </>

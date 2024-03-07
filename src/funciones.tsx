@@ -13,8 +13,8 @@ export function reemplazarEspaciosPorMas(cadena: string): string {
     return cadena.replace(/\s+/g, '+');
   }
 
-export function cambiarEstado():void{
-  console.log("La funcion de cambiar estado está funcionando")
+export function cambiarEstado(libro:Libro):void{
+  console.log(`Tu componente ${libro.name} cambiaria a estado ${libro.added}`)
 }
 
 export function cargarLibros(librosObtenidos:AxiosResponse):Libro[]{
@@ -48,6 +48,16 @@ export async function obtenerDatos(nombredelibro: string,evento:React.FormEvent,
   }
 }
 
+
+
+
+
+
+
+
+
+
+
 export async function getEmaBooks(){
   try {
     const response = await instance.post('/product/getAll');
@@ -58,25 +68,25 @@ export async function getEmaBooks(){
   }
 }
 
-export async function createBook(codigo:string){
+export async function createBook(libro:Libro){
   try{
-    await instance.post(`/product/create/${codigo}`);
+    await instance.post(`/product/create/`,{
+        "code": libro.code, 
+        "name": libro.name,
+        "description": "",
+        "price": "",
+        "author":libro.author
+    });
   }
   catch(error){
     console.log('No se pudo crear el libro')
   }
 }
-export async function deleteBook(codigo:string){
+export async function deleteBook(libro:Libro){
   try{
-    await instance.post(`/product/delte${codigo}`);
-  }
-  catch(error){
-    console.log('No se pudo crear el libro')
-  }
-}
-export async function addBook(codigo:string){
-  try{
-    await instance.post(`/product/delte${codigo}`);
+    await instance.post(`/product/delete`,{
+      "code":libro.code
+    });
   }
   catch(error){
     console.log('No se pudo crear el libro')
