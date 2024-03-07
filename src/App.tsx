@@ -1,50 +1,65 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import './assets/styles/index.css'
-import Despliegue from './components/despliegue';
+import Despliegue from './components/wresults/despliegue';
 import { Libro } from './interfaces';
-import {reemplazarEspaciosPorMas} from './funciones'
-
+import { getEmaBooks, reemplazarEspaciosPorMas } from './funciones'
+import axios from 'axios';
+import { Toast } from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const libroCargando: Libro = {
   name: 'libroEjemplodeCarga',
-  autor: "string",
+  author: "string",
   year: "1234",
-  url: ""
+  url: "",
+  added: false
 }
 
 function App() {
   const [booksState, setBooksState] = useState<Libro[]>([])
   async function obtenerDatos(nombredelibro: string) {
-    let linkBase: string = 'https://openlibrary.org/search.json?q='
-    let linkOptions: string = '&fields=title,author_name,first_publish_year,cover_edition_key&limit=3'
-    let imageUrlBase: string = 'https://covers.openlibrary.org/b/olid/'
-    let nombreDeLibroFinal: string = reemplazarEspaciosPorMas(nombredelibro)
-    let linkFinal: string = linkBase + nombreDeLibroFinal + linkOptions
-    let datos: Libro[] = []
+    const imageUrlBase = 'https://covers.openlibrary.org/b/olid/';
+    const nombreDeLibroFinal = reemplazarEspaciosPorMas(nombredelibro);
+    const linkFinal = `https://openlibrary.org/search.json?q=${nombreDeLibroFinal}&fields=title,author_name,first_publish_year,cover_edition_key&limit=3`;
+    const datos = [];
     setBooksState([libroCargando])
-    await fetch(linkFinal)
-      .then(async (response) => {
-        console.log("buscando " + linkFinal)
-        const data = await response.json();
-        for (let i = 0; i < data.docs.length; i++) {
-          let element = data.docs[i];
-          let imageUrlFinal = imageUrlBase + element.cover_edition_key + '-M.jpg'
-          let libro: Libro = {
-            name: element.title,
-            autor: element.author_name,
-            year: element.first_publish_year,
-            url: imageUrlFinal
-          }
-          datos.push(libro)
-        }
-        setBooksState(datos)
-        /* console.log("Ya cargue el estado") */
-      })
-      .catch(function (error) {
-        console.log("Hubo un error :'(" + error);
-      });
+    try {
+      const response = await axios.get(linkFinal);
+      console.log("buscando " + linkFinal);
+
+      for (const element of response.data.docs) {
+        const imageUrlFinal = imageUrlBase + element.cover_edition_key + '-M.jpg';
+        const libro = {
+          name: element.title,
+          author: element.author_name,
+          year: element.first_publish_year,
+          url: imageUrlFinal,
+          added: false
+        };
+        datos.push(libro);
+      }
+
+      setBooksState(datos);
+      /* console.log("Ya cargué el estado"); */
+    } catch (error) {
+      console.log("Hubo un error: " + error);
+    }
   }
   const searchInput = useRef<HTMLInputElement | null>(null);
+
+
+
+  const [showToast, setShowToast] = useState(false);
+  const toastRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (toastRef.current) {
+      const bsToast = new Toast(toastRef.current);
+      bsToast.show();
+    }
+  }, [showToast]);
+
+  getEmaBooks()
 
   return (
     <>
@@ -58,6 +73,16 @@ function App() {
       <div className="resultados">
         <Despliegue libros={booksState}></Despliegue>
       </div>
+      {/* <div>
+      <button className="btn btn-success" onClick={() => setShowToast(!showToast)}>
+        {showToast ? 'Ocultar Toast' : 'Mostrar Toast'}
+      </button>
+      <div className="toast position-absolute m-4" role="alert" ref={toastRef}>
+        <div className="toast-body">
+          ¡Hola! Este es un mensaje de toast.
+        </div>
+      </div>
+    </div> */}
     </>
   )
 }

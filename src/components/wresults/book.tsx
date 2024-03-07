@@ -1,4 +1,9 @@
-function Pelicula({ name, autor, url, year }: { name: string, autor: string, url: string, year: string }) {
+import AddButton from '../wbutton/addButton'
+import '../wbutton/buttons.css'
+import DeleteButton from '../wbutton/deleteButton'
+import { cambiarEstado } from '../../funciones'
+
+function Book({ name, author, url, year ,added}: { name: string, author: string, url: string, year: string ,added:boolean}) {
     return (
         <div className="movieContainer">
             <div className="info">
@@ -7,12 +12,15 @@ function Pelicula({ name, autor, url, year }: { name: string, autor: string, url
                 </div>
                 <div className="autor">
                     <p>Autor:</p>
-                    <span>{autor}</span>
+                    <span>{author}</span>
                 </div>
                 <div className="year">
                     <p>Año: </p>
                     <span>{year}</span>
                 </div>
+                <section className="buttonSection">
+                    {added?<DeleteButton onButtonClick={cambiarEstado}/>:<AddButton onButtonClick={cambiarEstado}/>}
+                </section>
             </div>
             <div className="media">
                 <figure>
@@ -23,4 +31,4 @@ function Pelicula({ name, autor, url, year }: { name: string, autor: string, url
     )
 }
 
-export default Pelicula
+export default Book

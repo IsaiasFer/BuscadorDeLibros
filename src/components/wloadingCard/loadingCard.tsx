@@ -1,4 +1,4 @@
-import '../assets/styles/loading.css'
+import '../../assets/styles/loading.css'
 import LoadingCardItem from './loadingCardItem'
 
 function LoadingCard() {

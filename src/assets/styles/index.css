@@ -98,6 +98,7 @@ button:focus-visible {
   border-radius: 10px;
   width: 200px;
   height: 200px;
+  text-align: center;
 }
 
 .movieContainer figure img{
@@ -114,11 +115,9 @@ button:focus-visible {
 }
 .movieContainer .autor{
   display: flex;
-  align-items: center;
 }
 .movieContainer .year{
   display: flex;
-  align-items: center;
 }
 
 .libro{

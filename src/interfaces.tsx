@@ -1,6 +1,7 @@
 export interface Libro {
     name: string,
-    autor: string,
+    author: string,
     year: string,
-    url: string
+    url: string,
+    added:boolean
   }
