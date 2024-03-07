@@ -5,6 +5,7 @@ export const libroCargando: Libro = {
     author: "string",
     year: "1234",
     url: "",
+    code:" ",
     added: false
 }
 
@@ -13,6 +14,7 @@ export const libroEjemplo1: Libro = {
     author: "string",
     year: "1234",
     url: "",
+    code:" ",
     added: true
 }
 export const libroEjemplo2: Libro = {
@@ -20,5 +22,6 @@ export const libroEjemplo2: Libro = {
     author: "string",
     year: "1234",
     url: "",
+    code:" ",
     added: true
 }

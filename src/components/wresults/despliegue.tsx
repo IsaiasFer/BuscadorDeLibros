@@ -14,7 +14,7 @@ function Despliegue({ libros }: {
         /* console.log("acabo de cargar libros") */
         return libros.map((libro) =>
             <div className="libro">
-                {<Book name={libro.name} author={libro.author} year={libro.year} url={libro.url} added={comprobarExistencia(libro)} />}
+                {<Book name={libro.name} author={libro.author} year={libro.year} url={libro.url} code={libro.code} added={comprobarExistencia(libro)} />}
             </div>
         )
     }

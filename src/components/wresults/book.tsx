@@ -3,7 +3,7 @@ import DeleteButton from '../wbutton/deleteButton'
 import { cambiarEstado } from '../../funciones'
 import '../wbutton/buttons.css'
 
-function Book({ name, author, url, year ,added}: { name: string, author: string, url: string, year: string ,added:boolean}) {
+function Book({ name, author, url, year ,code,added}: { name: string, author: string, url: string, year: string ,code:string,added:boolean}) {
     return (
         <div className="movieContainer">
             <div className="info">

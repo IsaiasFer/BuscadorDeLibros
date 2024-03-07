@@ -26,6 +26,7 @@ export function cargarLibros(librosObtenidos:AxiosResponse):Libro[]{
       author: element.author_name,
       year: element.first_publish_year,
       url: imageUrl,
+      code:element.key.slice(7),
       added: false
     };
     datos.push(libro);
@@ -36,7 +37,7 @@ export function cargarLibros(librosObtenidos:AxiosResponse):Libro[]{
 export async function obtenerDatos(nombredelibro: string,evento:React.FormEvent,setearLibro:(value: React.SetStateAction<Libro[]>) => void) {
   evento.preventDefault()
   const nombreDeLibroFinal = reemplazarEspaciosPorMas(nombredelibro);
-  const linkFinal = `https://openlibrary.org/search.json?q=${nombreDeLibroFinal}&fields=title,author_name,first_publish_year,cover_edition_key&limit=3`;
+  const linkFinal = `https://openlibrary.org/search.json?q=${nombreDeLibroFinal}&fields=title,author_name,first_publish_year,cover_edition_key,key&limit=3`;
   // Ponemos los libros a cargar
   setearLibro([libroCargando])
   try {
